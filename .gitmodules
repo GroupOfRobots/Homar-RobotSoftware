@@ -1,0 +1,3 @@
+[submodule "Robot/LEGO"]
+	path = Robot/LEGO
+	url = https://github.com/Josh-the-bubble/Bionik-TwitchGo-LEGO-Software.git
