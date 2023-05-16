@@ -56,12 +56,7 @@ class Movement:
             GPIO.output(self.b_in_1_pin, GPIO.LOW)
             GPIO.output(self.b_in_2_pin, GPIO.HIGH)
             self.pwm_b_pin.start(abs(pwm_valuel))
-        else:
-            GPIO.output(self.b_in_1_pin, GPIO.HIGH)
-            GPIO.output(self.b_in_2_pin, GPIO.HIGH)
-            self.pwm_b_pin.start(0)
-
-        if pwm_valuel < 0:
+        elif pwm_valuel < 0:
             GPIO.output(self.b_in_1_pin, GPIO.HIGH)
             GPIO.output(self.b_in_2_pin, GPIO.LOW)
             self.pwm_b_pin.start(abs(pwm_valuel))
@@ -74,12 +69,7 @@ class Movement:
             GPIO.output(self.a_in_1_pin, GPIO.LOW)
             GPIO.output(self.a_in_2_pin, GPIO.HIGH)
             self.pwm_a_pin.start(abs(pwm_value2))
-        else:
-            GPIO.output(self.a_in_1_pin, GPIO.HIGH)
-            GPIO.output(self.a_in_2_pin, GPIO.HIGH)
-            self.pwm_a_pin.start(0)
-
-        if pwm_value2 < 0:
+        elif pwm_value2 < 0:
             GPIO.output(self.a_in_1_pin, GPIO.HIGH)
             GPIO.output(self.a_in_2_pin, GPIO.LOW)
             self.pwm_a_pin.start(abs(pwm_value2))
