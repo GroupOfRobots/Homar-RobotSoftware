@@ -20,7 +20,6 @@ def axis_move(axis):
 
 if __name__ == "__main__":
     movement = Movement()
-    movement.setup()
     servo = ServoMotor()
     servo_state = None
     try:
