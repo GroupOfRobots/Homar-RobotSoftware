@@ -14,7 +14,10 @@ a_in_2_pin = 20
 
 class Robot:
     def __init__(self) -> None:
-        self._motors = {"left": Motor(pwm_a_pin, a_in_1_pin, a_in_2_pin), "right": Motor(pwm_b_pin, b_in_1_pin, b_in_2_pin)}
+        self._motors = {
+            "left": Motor(pwm_a_pin, a_in_1_pin, a_in_2_pin),
+            "right": Motor(pwm_b_pin, b_in_1_pin, b_in_2_pin),
+        }
         self._motors_standby_pin = standby_pin
         self._servo = ServoMotor()
 

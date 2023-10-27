@@ -16,7 +16,6 @@ a_in_2_pin = 20
 
 
 class Movement:
-
     def __init__(self):
         self.standby_pin = standby_pin
         self.setup()

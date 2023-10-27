@@ -15,7 +15,6 @@ a_in_2_pin = 20
 
 
 class Movement:
-
     def __init__(self):
         self.standby_pin = standby_pin
 
@@ -89,6 +88,7 @@ class Movement:
         GPIO.output(self.a_in_1_pin, GPIO.HIGH)
         GPIO.output(self.a_in_2_pin, GPIO.HIGH)
         self.pwm_a_pin.start(0)
+
 
 # movement = Movement()
 # movement.setup()
