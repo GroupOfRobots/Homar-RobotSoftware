@@ -3,6 +3,7 @@ import time
 from xbox360controller import Xbox360Controller
 from move_all import Movement
 from Servomotor import ServoMotor
+from Robot import Robot
 
 
 pwm = 100
@@ -19,8 +20,8 @@ def axis_move(axis):
 
 
 if __name__ == "__main__":
+    robot = Robot()
     movement = Movement()
-    servo = ServoMotor()
     servo_state = None
     try:
         with Xbox360Controller(0, axis_threshold=0.2) as controller:
@@ -29,13 +30,14 @@ if __name__ == "__main__":
             left = controller.axis_l
             while True:
                 if controller.button_a.is_pressed and servo_state != 'up':
-                    servo.moveUp()
+                    robot.move_servo_up()
                     servo_state = 'up'
                 elif controller.button_y.is_pressed and servo_state != 'down':
-                    servo.moveDown()
+                    robot.move_servo_down()
                     servo_state = 'down'
                 pwmL, pwmR = axis_move(left)
-                movement.move_all(pwmL, pwmR)
+                robot.start_motor("left", pwmL)
+                robot.start_motor("right", pwmR)
                 time.sleep(0.01)
 
     except KeyboardInterrupt:
