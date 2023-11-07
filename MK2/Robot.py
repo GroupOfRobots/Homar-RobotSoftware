@@ -21,9 +21,8 @@ class Robot:
         }
         self._motors_standby_pin = standby_pin
         self._servo = ServoMotor()
-        GPIO.setup(self.standby_pin, GPIO.OUT)
-        GPIO.output(self.standby_pin, GPIO.HIGH)
-
+        GPIO.setup(self._motors_standby_pin, GPIO.OUT)
+        GPIO.output(self._motors_standby_pin, GPIO.HIGH)
 
     def start_motor(self, motor_name: str, pwm: int):
         self._motors[motor_name].start_motor(pwm)
