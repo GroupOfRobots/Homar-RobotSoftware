@@ -1,9 +1,22 @@
 from Robot import Robot
+import time
+from xbox360controller import Xbox360Controller
+
+pwm = 100
+RL = [0, 0]
+
+
+def axis_move(axis):
+    # print('Axis {0} moved to {1} {2}'.format(axis.name, axis.x, axis.y))
+
+    pwmL = -axis.y * pwm / 2 + axis.x * pwm / 2
+    pwmR = -axis.y * pwm / 2 - axis.x * pwm / 2
+
+    return pwmL, pwmR
 
 
 if __name__ == "__main__":
     robot = Robot()
-    movement = Movement()
     servo_state = None
     try:
         with Xbox360Controller(0, axis_threshold=0.2) as controller:
