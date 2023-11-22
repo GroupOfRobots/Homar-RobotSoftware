@@ -11,7 +11,7 @@ PWM = 100
 
 class MotorNode(Node, MotorDrive):
     def __init__(self):
-        super().__init__("minimal_subscriber")
+        super().__init__("MotorNode")
         self.subscription = self.create_subscription(
             Twist, "/cmd_vel", self.move_motor_calbck, 10
         )
