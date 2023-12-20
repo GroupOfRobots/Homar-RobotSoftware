@@ -1,4 +1,4 @@
-from Motor import Motor
+from twitch_go_robot.Motor import Motor
 import RPi.GPIO as GPIO
 from typing import List
 

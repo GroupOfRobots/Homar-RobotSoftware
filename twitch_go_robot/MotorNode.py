@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 
-from MotorDrive import MotorDrive
+from twitch_go_robot.MotorDrive import MotorDrive
 from geometry_msgs.msg import Twist
 
 from typing import List

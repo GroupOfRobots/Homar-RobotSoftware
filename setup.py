@@ -18,6 +18,6 @@ setup(
     license="TODO: License declaration",
     tests_require=["pytest"],
     entry_points={
-        "console_scripts": ["motor_node = twitch_go_robot.MotroNode:main"],
+        "console_scripts": ["motor_node = twitch_go_robot.MotorNode:main"],
     },
 )
