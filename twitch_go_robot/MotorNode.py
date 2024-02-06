@@ -9,17 +9,18 @@ from typing import List
 PWM = 100
 
 
-class MotorNode(Node, MotorDrive):
+class MotorNode(Node):
     def __init__(self):
         super().__init__("MotorNode")
+        self._motor_drive = MotorDrive()
         self.subscription = self.create_subscription(
             Twist, "/cmd_vel", self.move_motor_calbck, 10
         )
-        self.subscription  # prevent unused variable warning
+        self.subscription
 
     def move_motor_calbck(self, msg: Twist):
         pwms = self.convert_input_to_pwm(msg)
-        self.stop_motors(pwms)
+        self._motor_drive.move_motors(pwms)
 
     def convert_input_to_pwm(self, input: Twist) -> List[float]:
         # print('input.linear {0} moved to {1} {2}'.format(input.linear.name, input.linear.x, input.linear.y))
