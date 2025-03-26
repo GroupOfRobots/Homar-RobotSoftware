@@ -1,7 +1,7 @@
 from std_msgs.msg import String
 import rclpy
 from rclpy.node import Node
-from twitch_go_homar import ServoMotor
+from twitch_go_homar.ServoMotor import ServoMotor
 
 
 class ServoController(Node):

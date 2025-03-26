@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from twitch_go_homar import Motor 
+from twitch_go_homar.Motor import Motor 
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 import rclpy

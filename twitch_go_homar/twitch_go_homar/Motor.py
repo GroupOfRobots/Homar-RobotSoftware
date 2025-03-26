@@ -5,7 +5,8 @@ class Motor:
     def __init__(self, pwm_pin: int, first_in_pin: int, second_in_pin: int) -> None:
         self._first_in_pin = first_in_pin
         self._second_in_pin = second_in_pin
-
+        
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(pwm_pin, GPIO.OUT)
         self._pwm_pin = GPIO.PWM(pwm_pin, 1000)
         GPIO.setup(self._first_in_pin, GPIO.OUT)
