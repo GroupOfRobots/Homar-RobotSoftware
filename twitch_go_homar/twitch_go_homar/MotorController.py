@@ -17,7 +17,7 @@ B_IN_2_PIN = 23
 class MotorController(Node):
     def __init__(self):
         super().__init__('motor_controller')
-        self.subscription = self.create_subscription(Twist, 'cmd_vel', self.listener_callback, 10)
+        self.subscription = self.create_subscription(MotorData, 'cmd_vel', self.listener_callback, 10)
  
         self.left_motor = Motor(PWM_A_PIN, A_IN_1_PIN, A_IN_2_PIN)
         self.right_motor = Motor(PWM_B_PIN, B_IN_1_PIN, B_IN_2_PIN)
@@ -27,9 +27,9 @@ class MotorController(Node):
         GPIO.output(self._motors_standby_pin, GPIO.HIGH)
 
     def listener_callback(self, twist):
-        pwm_left = twist.linear.x - twist.angular.z
-        pwm_right = twist.linear.x + twist.angular.z
-        self.move_motors(pwm_left * 100, pwm_right * 100)
+        pwm_left = twist.y - twist.x
+        pwm_right = twist.y + twist.x
+        self.move_motors(pwm_left * 1000, pwm_right * 1000)
 
 
     def move_motors(self, pwm_left, pwm_right):
@@ -47,3 +47,8 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+class MotorData:
+    def __init__(self, x=0.0, y=0.0):
+        self.x = x
+        self.y = y
