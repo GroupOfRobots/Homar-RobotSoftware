@@ -1,13 +1,13 @@
 import rclpy
 from rclpy.node import Node
-from twitch_go_homar.MotorController import MotorData
+from geometry_msgs.msg import Vector3
 from std_msgs.msg import String
 from xbox360controller import Xbox360Controller
 
 class XboxController(Node):
     def __init__(self, reverse_axis_mode=True):
         super().__init__('xbox_controller')
-        self.cmd_vel_pub = self.create_publisher(MotorData, 'cmd_vel', 10)
+        self.cmd_vel_pub = self.create_publisher(Vector3, 'cmd_vel', 10)
         self.servo_pub = self.create_publisher(String, 'servo_cmd', 10)
         self.reverse_axis_mode = reverse_axis_mode
         try:
@@ -29,8 +29,18 @@ class XboxController(Node):
         self.servo_pub.publish(servo_cmd)
 
     def on_left_stick_moved(self, axis):
-        twist = MotorData(axis.x, -axis.y if self.reverse_axis_mode else axis.y)
-        self.cmd_vel_pub.publish(twist)
+        msg = Vector3(axis.x, -axis.y if self.reverse_axis_mode else axis.y)
+        if abs(axis.x) < 0.1:
+            msg.x = 0.0
+        else:
+            msg.x = axis.x
+
+        if abs(axis.y) < 0.1:
+            msg.y = 0.0
+        else:
+            msg.y = axis.y
+            
+        self.cmd_vel_pub.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)
