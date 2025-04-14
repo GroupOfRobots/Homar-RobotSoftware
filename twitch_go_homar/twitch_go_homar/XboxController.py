@@ -18,18 +18,18 @@ class XboxController(Node):
         except Exception as e:
             self.get_logger().error(f'Exception while init controller: {e}')
         
-    def on_button_a_pressed(self):
+    def on_button_a_pressed(self, button):
         servo_cmd = String()
         servo_cmd.data = 'up'
         self.servo_pub.publish(servo_cmd)
 
-    def on_button_y_pressed(self):
+    def on_button_y_pressed(self, button):
         servo_cmd = String()
         servo_cmd.data = 'down'
         self.servo_pub.publish(servo_cmd)
 
     def on_left_stick_moved(self, axis):
-        msg = Vector3(axis.x, -axis.y if self.reverse_axis_mode else axis.y)
+        msg = Vector3()
         if abs(axis.x) < 0.1:
             msg.x = 0.0
         else:
@@ -39,7 +39,7 @@ class XboxController(Node):
             msg.y = 0.0
         else:
             msg.y = axis.y
-            
+
         self.cmd_vel_pub.publish(msg)
 
 def main(args=None):

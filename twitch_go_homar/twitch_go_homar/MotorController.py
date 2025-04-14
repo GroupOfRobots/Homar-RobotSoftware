@@ -14,6 +14,7 @@ PWM_B_PIN = 18
 B_IN_1_PIN = 24
 B_IN_2_PIN = 23
 
+PWM_MULTIPLIER = -100
 class MotorController(Node):
     def __init__(self):
         super().__init__('motor_controller')
@@ -27,9 +28,9 @@ class MotorController(Node):
         GPIO.output(self._motors_standby_pin, GPIO.HIGH)
 
     def listener_callback(self, msg):
-        pwm_left = msg.y - msg.x
-        pwm_right = msg.y + msg.x
-        self.move_motors(pwm_left * 1000, pwm_right * 1000)
+        pwm_left = max(-1, min(1, msg.y - msg.x))
+        pwm_right = max(-1, min(1, msg.y + msg.x))
+        self.move_motors(pwm_left * PWM_MULTIPLIER, pwm_right * PWM_MULTIPLIER)
 
 
     def move_motors(self, pwm_left, pwm_right):
