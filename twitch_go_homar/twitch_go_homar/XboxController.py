@@ -4,6 +4,8 @@ from geometry_msgs.msg import Vector3
 from std_msgs.msg import String
 from xbox360controller import Xbox360Controller
 
+
+
 class XboxController(Node):
     def __init__(self):
         super().__init__('xbox_controller')
@@ -27,15 +29,13 @@ class XboxController(Node):
         servo_cmd.data = 'down'
         self.servo_pub.publish(servo_cmd)
 
-    def update_joystick_state(self, axis):
-        self.joystick_state.x = axis.x
-        self.joystick_state.y = axis.y
-
     def publish_joystick_state(self):
         msg = Vector3()
-        msg.x = self.controller.axis_l.x
-        msg.y = self.controller.axis_l.y
-        self.cmd_vel_pub.publish(self.joystick_state)
+        left = self.controller.axis_l.x
+        right = self.controller.axis_r.x
+        msg.x = float(left if abs(left) > 0.1 else 0.0)
+        msg.y = float(right if abs(right) > 0.1 else 0.0)
+        self.cmd_vel_pub.publish(msg)
         
 def main(args=None):
     rclpy.init(args=args)
