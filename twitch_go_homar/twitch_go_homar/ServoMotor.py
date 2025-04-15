@@ -14,9 +14,15 @@ class ServoMotor:
 
     def moveUp(self):
         self.servo.ChangeDutyCycle(self.up_pos)
-        time.sleep(0.1)
+        time.sleep(0.15)
+        self.stop()
   
     def moveDown(self):
         self.servo.ChangeDutyCycle(self.down_pos)
         time.sleep(0.1)
   
+    def stop(self):
+        self.servo.ChangeDutyCycle(0)
+        time.sleep(0.1)
+        self.stop()
+

@@ -10,12 +10,10 @@ class XboxController(Node):
         self.cmd_vel_pub = self.create_publisher(Vector3, 'cmd_vel', 10)
         self.servo_pub = self.create_publisher(String, 'servo_cmd', 10)
         self.timer = self.create_timer(0.1, self.publish_joystick_state)
-        self.joystick_state = Vector3()
         try:
             self.controller = Xbox360Controller(0, axis_threshold=0.0)
             self.controller.button_a.when_pressed = self.on_button_a_pressed
             self.controller.button_y.when_pressed = self.on_button_y_pressed
-            self.controller.axis_l.when_moved = self.update_joystick_state
         except Exception as e:
             self.get_logger().error(f'Exception while init controller: {e}')
         
@@ -34,6 +32,9 @@ class XboxController(Node):
         self.joystick_state.y = axis.y
 
     def publish_joystick_state(self):
+        msg = Vector3()
+        msg.x = self.controller.axis_l.x
+        msg.y = self.controller.axis_l.y
         self.cmd_vel_pub.publish(self.joystick_state)
         
 def main(args=None):
