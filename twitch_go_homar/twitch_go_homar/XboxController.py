@@ -32,7 +32,7 @@ class XboxController(Node):
     def publish_joystick_state(self):
         msg = Vector3()
         left = self.controller.axis_l.x
-        right = self.controller.axis_r.x
+        right = self.controller.axis_l.y
         msg.x = float(left if abs(left) > 0.1 else 0.0)
         msg.y = float(right if abs(right) > 0.1 else 0.0)
         self.cmd_vel_pub.publish(msg)
