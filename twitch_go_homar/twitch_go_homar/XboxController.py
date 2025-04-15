@@ -5,16 +5,17 @@ from std_msgs.msg import String
 from xbox360controller import Xbox360Controller
 
 class XboxController(Node):
-    def __init__(self, reverse_axis_mode=True):
+    def __init__(self):
         super().__init__('xbox_controller')
         self.cmd_vel_pub = self.create_publisher(Vector3, 'cmd_vel', 10)
         self.servo_pub = self.create_publisher(String, 'servo_cmd', 10)
-        self.reverse_axis_mode = reverse_axis_mode
+        self.timer = self.create_timer(0.1, self.publish_joystick_state)
+        self.joystick_state = Vector3()
         try:
             self.controller = Xbox360Controller(0, axis_threshold=0.0)
             self.controller.button_a.when_pressed = self.on_button_a_pressed
             self.controller.button_y.when_pressed = self.on_button_y_pressed
-            self.controller.axis_l.when_moved = self.on_left_stick_moved
+            self.controller.axis_l.when_moved = self.update_joystick_state
         except Exception as e:
             self.get_logger().error(f'Exception while init controller: {e}')
         
@@ -28,20 +29,13 @@ class XboxController(Node):
         servo_cmd.data = 'down'
         self.servo_pub.publish(servo_cmd)
 
-    def on_left_stick_moved(self, axis):
-        msg = Vector3()
-        if abs(axis.x) < 0.1:
-            msg.x = 0.0
-        else:
-            msg.x = axis.x
+    def update_joystick_state(self, axis):
+        self.joystick_state.x = axis.x
+        self.joystick_state.y = axis.y
 
-        if abs(axis.y) < 0.1:
-            msg.y = 0.0
-        else:
-            msg.y = axis.y
-
-        self.cmd_vel_pub.publish(msg)
-
+    def publish_joystick_state(self):
+        self.cmd_vel_pub.publish(self.joystick_state)
+        
 def main(args=None):
     rclpy.init(args=args)
     controller = XboxController()
