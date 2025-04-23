@@ -1,0 +1,16 @@
+[Unit]
+Description=Launcher for homar robor
+After=network.target
+
+[Service]
+Environment="HOME=/home/pi"
+Environment="ROS2_WS=CHANGE_ME"
+ExecStart=/bin/bash -c 'source /opt/ros/humble/setup.bash && source $ROS2_WS/src/install/setup.bash && ros2 launch twitch_go_homar homar_package_launch.py'
+Restart=always
+User=pi
+WorkingDirectory=/home/pi
+StandardOutput=inherit
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target
