@@ -1,4 +1,5 @@
 # Uruchomienie pakietu
+> ⚠️ **UWAGA:** Zakłada się, że do Homara podłączony jest pad.
 ## Aby ręcznie uruchomić pakiet:
 ```
 ros2 launch twich_go_homar  homar_package_launch.py
